@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 from pathlib import Path
 from streamlit_extras.add_vertical_space import add_vertical_space
-from formatting import write_footer_hide_menu, resize_image
+from formatting import hide_menu
 
 
 st.set_page_config(
@@ -21,6 +21,8 @@ if "all_ids" not in st.session_state:
     st.session_state["all_ids"] = []
 if "posix_path" not in st.session_state:
     st.session_state["posix_path"] = ""
+if "idiom_idx" not in st.session_state:
+    st.session_state["idiom_idx"] = ""
 
 
 def display_intro():
@@ -34,6 +36,7 @@ def find_closest_match(df, slider1_value, slider2_value):
 
     # Find the index of the minimum distance
     closest_index = df['distance'].idxmin()
+    st.session_state["idiom_idx"] = df.loc[closest_index]["idiom"]
 
     # Return the corresponding row
     return df.loc[closest_index]["image_ids"]
@@ -64,17 +67,24 @@ def select_vals_display(df_path, abs_path):
         st.markdown("<p style='font-size: 18px;'><b>Idiomatic meaning in image</b></p>",
                     unsafe_allow_html=True)
         add_vertical_space(2)
-        st.slider(label="", min_value=0, max_value=10, key="idiomatic")
+        st.select_slider(label="example",options=[round(x * 0.1, 2) for x in range(0, 101)], key="idiomatic",
+         label_visibility="hidden", format_func=lambda x: '0' if x == 0 else '10' if x == 10 else x)
     with col2:
         pass
     with col3:
         update_image(st.session_state["literal"], st.session_state["idiomatic"], df_path, abs_path)
+        st.markdown(f"<p style='font-size: 13px;'>Image generated for the idiom <i>{st.session_state['idiom_idx']}</i></p>",
+            unsafe_allow_html=True)
+
+        
+        
+
 
 
 def main():
     display_intro()
-    write_footer_hide_menu()
-    select_vals_display("data/dummy_data.csv",
+    hide_menu()
+    select_vals_display("data/ratings_dummy.csv",
                         "data/gen_resized")
 
 main()
