@@ -27,7 +27,9 @@ if "idiom_idx" not in st.session_state:
 
 def display_intro():
     st.title("Exhibition: Visualised Idioms")
-    st.write("Add some info on work and reference to paper")
+    st.write("This is a demonstration of the results that were produced for the paper *Title*." 
+    "The image that is displayed will change according to the values that are chosen for the number of nouns"
+    "found in the image and the rating for the idiomatic meaning from the annotation study.")
     add_vertical_space(3)
 
 def find_closest_match(df, slider1_value, slider2_value):
@@ -59,12 +61,12 @@ def update_image(slider1_value, slider2_value, df_path, abs_path):
 def select_vals_display(df_path, abs_path):
     col1, col2, col3= st.columns(3, gap="small")
     with col1:
-        st.markdown("<p style='font-size: 18px;'><b>Number of literal elements in image</b></p>",
+        st.markdown("<p style='font-size: 18px;'><b>Number of nouns found in the image</b></p>",
                     unsafe_allow_html=True)
         add_vertical_space(2)
         st.slider(label="", min_value=0, max_value=10, key="literal")
         add_vertical_space(3)
-        st.markdown("<p style='font-size: 18px;'><b>Idiomatic meaning in image</b></p>",
+        st.markdown("<p style='font-size: 18px;'><b>Rating for the idiomatic meaning in the image</b></p>",
                     unsafe_allow_html=True)
         add_vertical_space(2)
         st.select_slider(label="example",options=[round(x * 0.1, 2) for x in range(0, 101)], key="idiomatic",
