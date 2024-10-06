@@ -27,21 +27,24 @@ if "idiom_idx" not in st.session_state:
 
 def display_intro():
     st.title("Exhibition: Visualised Idioms")
-    st.write("This is a demonstration of the results that were produced for the paper *Title*." 
-    "The image that is displayed will change according to the values that are chosen for the number of nouns"
-    "found in the image and the rating for the idiomatic meaning from the annotation study.")
+    st.write("This is a demonstration of the results that were produced for the paper"
+             " *Let Me Picture This: Understanding Idiom Visualization in Generative AI Models*. ")
+    st.write("The displayed image will change based on the number of nouns from the prompt that "
+             "reoccur in the generated image and the idiomatic meaning rating from the annotation study.")
+
     add_vertical_space(3)
 
 def find_closest_match(df, slider1_value, slider2_value):
     # Calculate the Euclidean distance between the slider values and the DataFrame values
-    df['distance'] = np.sqrt((df['count_literal'] - slider1_value) ** 2 + (df['rating_idiom'] - slider2_value) ** 2)
+    df['all_counts'] = df['count_nouns_present_dreamlike'] + df['count_nouns_present_GPT']
+    df['distance'] = np.sqrt((df['all_counts'] - slider1_value) ** 2 + (df['rating'] - slider2_value) ** 2)
 
     # Find the index of the minimum distance
     closest_index = df['distance'].idxmin()
     st.session_state["idiom_idx"] = df.loc[closest_index]["idiom"]
 
     # Return the corresponding row
-    return df.loc[closest_index]["image_ids"]
+    return df.loc[closest_index]["ImageID"]
 
 
 def update_image(slider1_value, slider2_value, df_path, abs_path):
@@ -64,7 +67,7 @@ def select_vals_display(df_path, abs_path):
         st.markdown("<p style='font-size: 18px;'><b>Number of nouns found in the image</b></p>",
                     unsafe_allow_html=True)
         add_vertical_space(2)
-        st.slider(label="", min_value=0, max_value=10, key="literal")
+        st.slider(label="la", min_value=1, max_value=10, key="literal", label_visibility="hidden")
         add_vertical_space(3)
         st.markdown("<p style='font-size: 18px;'><b>Rating for the idiomatic meaning in the image</b></p>",
                     unsafe_allow_html=True)
@@ -86,7 +89,8 @@ def select_vals_display(df_path, abs_path):
 def main():
     display_intro()
     hide_menu()
-    select_vals_display("data/ratings_dummy.csv",
-                        "data/gen_resized")
+    select_vals_display(
+        "C:\\Users\\rockstro\Documents\PhD\My_Library\Ontologies_Knowledge_Graphs\idioms\study\meaning_retention_analysis\\all_data.csv",
+        "C:\\Users\\rockstro\\Documents\\PhD\\My_Library\\Ontologies_Knowledge_Graphs\\idioms\\gen_resized\\")
 
 main()
