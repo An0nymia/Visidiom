@@ -92,7 +92,7 @@ def main():
     display_intro()
     hide_menu()
     select_vals_display(
-        "data/all_data.csv",
+        "https://raw.githubusercontent.com/An0nymia/Visidiom/main/data/all_data.csv",
         "data/gen_resized")
 
 main()
