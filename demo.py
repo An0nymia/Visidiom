@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
+import os
 from pathlib import Path
 from streamlit_extras.add_vertical_space import add_vertical_space
 from formatting import hide_menu
-
 
 st.set_page_config(
     page_title="Visual Idioms: Exhibition",
@@ -87,10 +87,12 @@ def select_vals_display(df_path, abs_path):
 
 
 def main():
+    HERE = os.path.dirname(os.path.abspath(__file__))
+
     display_intro()
     hide_menu()
     select_vals_display(
-        "C:\\Users\\rockstro\Documents\PhD\My_Library\Ontologies_Knowledge_Graphs\idioms\study\meaning_retention_analysis\\all_data.csv",
-        "C:\\Users\\rockstro\\Documents\\PhD\\My_Library\\Ontologies_Knowledge_Graphs\\idioms\\gen_resized\\")
+        "data/all_data.csv",
+        "data/gen_resized")
 
 main()
