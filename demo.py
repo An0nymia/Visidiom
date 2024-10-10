@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import streamlit as st
-import os
 from pathlib import Path
 from streamlit_extras.add_vertical_space import add_vertical_space
 from formatting import hide_menu
@@ -56,6 +55,7 @@ def update_image(slider1_value, slider2_value, df_path, abs_path):
     file_id = "_".join(id_split[2:])
     current_path = f"{abs_path}\\{dir_id}\\{file_id}"
     st.session_state["posix_path"] = Path(current_path).as_posix()
+    st.write(st.session_state["posix_path"])
     st.image(st.session_state["posix_path"], use_column_width="auto")
 
 
@@ -82,17 +82,14 @@ def select_vals_display(df_path, abs_path):
             unsafe_allow_html=True)
 
         
-        
 
 
 
 def main():
-    HERE = os.path.dirname(os.path.abspath(__file__))
-
     display_intro()
     hide_menu()
     select_vals_display(
-        "https://raw.githubusercontent.com/An0nymia/Visidiom/refs/heads/main/data/all_data.csv",
-        "data/gen_resized")
+        "https://raw.githubusercontent.com/An0nymia/Visidiom/refs/heads/main/data/all_data_new.csv",
+        "https://raw.githubusercontent.com/An0nymia/Visidiom/refs/heads/main/data/gen_resized/")
 
 main()
