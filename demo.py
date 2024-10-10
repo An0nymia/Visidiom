@@ -18,8 +18,6 @@ if "idiomatic" not in st.session_state:
     st.session_state["idiomatic"] = 0
 if "all_ids" not in st.session_state:
     st.session_state["all_ids"] = []
-if "posix_path" not in st.session_state:
-    st.session_state["posix_path"] = ""
 if "idiom_idx" not in st.session_state:
     st.session_state["idiom_idx"] = ""
 
@@ -53,10 +51,8 @@ def update_image(slider1_value, slider2_value, df_path, abs_path):
     id_split= str(id_select).split("_")
     dir_id = "_".join(id_split[0:2])
     file_id = "_".join(id_split[2:])
-    current_path = f"{abs_path}\\{dir_id}\\{file_id}"
-    st.session_state["posix_path"] = Path(current_path).as_posix()
-    st.write(st.session_state["posix_path"])
-    st.image(st.session_state["posix_path"], use_column_width="auto")
+    current_path = f"{abs_path}/{dir_id}/{file_id}"
+    st.image(current_path, use_column_width="auto")
 
 
 
