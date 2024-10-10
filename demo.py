@@ -60,7 +60,7 @@ def update_image(slider1_value, slider2_value, df_path, abs_path):
 def select_vals_display(df_path, abs_path):
     col1, col2, col3= st.columns(3, gap="small")
     with col1:
-        st.markdown("<p style='font-size: 18px;'><b>Number of nouns found in the image</b></p>",
+        st.markdown("<p style='font-size: 18px;'><b>Number of nouns found in the prompt and the image</b></p>",
                     unsafe_allow_html=True)
         add_vertical_space(2)
         st.slider(label="la", min_value=1, max_value=10, key="literal", label_visibility="hidden")
